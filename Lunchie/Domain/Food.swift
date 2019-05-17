@@ -39,7 +39,8 @@ struct Employee: Codable {
     var hasPickedUp: Bool = false
     var name: String = ""
     var selected_food: String = ""
-    var path: String? 
+    var path: String?
+    var id: String = "" 
 }
 
 

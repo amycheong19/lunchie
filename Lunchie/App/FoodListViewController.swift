@@ -24,11 +24,6 @@ class FoodListViewController: UITableViewController, ViewModelable {
             self?.tableView.reloadData()
             self?.tableView.refreshControl?.endRefreshing()
         }
-
-        viewModel.getEmployeesDataHandler = { [weak self] _ in
-            self?.tableView.reloadData()
-            self?.tableView.refreshControl?.endRefreshing()
-        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,8 +35,8 @@ class FoodListViewController: UITableViewController, ViewModelable {
             return UITableViewCell()
         }
         let food = viewModel.foodList[indexPath.row]
-        let employees = viewModel.employees.filter({ $0.selected_food == food.id })
-        let viewModel = FoodTableViewCellViewModel(employees: employees)
+        //let employees = viewModel.employees.filter({ $0.selected_food == food.id })
+        let viewModel = FoodTableViewCellViewModel(employees: food.employees ?? [])
         cell.viewModel =  viewModel
         cell.foodLabel.text = food.name
         cell.layoutIfNeeded()

@@ -20,10 +20,10 @@ class FoodListViewModel {
         }
     }
 
-    var getEmployeesDataHandler: (([Employee]) -> ())?
     private(set) var employees: [Employee] = [] {
         didSet {
-            getEmployeesDataHandler?(employees)
+
+//            originalFoodList = foodList
         }
     }
 
@@ -46,6 +46,8 @@ class FoodListViewModel {
                             }
                         }
                         self.foodList = foodList.sorted(by: { $0.name < $1.name })
+                        self.mergeFoodEmployeeList()
+                        self.originalFoodList = self.foodList
                     }
 
                     doc.reference.collection("employees").addSnapshotListener{ (snapshot, error) in
@@ -58,6 +60,7 @@ class FoodListViewModel {
                             }
                         }
                         self.employees = employees.sorted(by: { $0.name < $1.name })
+                        self.mergeFoodEmployeeList()
                     }
                 }
             }
@@ -66,10 +69,25 @@ class FoodListViewModel {
     }
 
     func searchFoodList(with keyword: String) {
-        
+        let keywordLowercased = keyword.lowercased()
+        let filteredFoodDetails = foodList.filter {
+                $0.name.lowercased().contains(keywordLowercased) ||
+                $0.employees!.contains{ $0.name.lowercased().contains(keywordLowercased)
+            }
+        }
+
+        foodList = filteredFoodDetails
     }
 
     func clearSearchFoodList(){
-//        foodList = originalFoodList
+        foodList = originalFoodList
+    }
+
+    func mergeFoodEmployeeList() {
+        self.foodList = self.foodList.compactMap { food -> Food in
+            var tempFood = food
+            tempFood.employees = self.employees.filter{ $0.selected_food == food.id }
+            return tempFood
+        }
     }
 }
