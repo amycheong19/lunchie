@@ -13,7 +13,7 @@ class EmployeeCollectionViewCell: UICollectionViewCell {
 
     var hasPickedUpFood: Bool = false {
         didSet {
-            backgroundColor = hasPickedUpFood ? #colorLiteral(red: 1, green: 0.2371000051, blue: 0, alpha: 1) : #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            backgroundColor = hasPickedUpFood ? #colorLiteral(red: 1, green: 0.2352941176, blue: 0, alpha: 1) : #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             nameLabel.textColor = hasPickedUpFood ? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) : #colorLiteral(red: 1, green: 0.2371000051, blue: 0, alpha: 1)
         }
     }

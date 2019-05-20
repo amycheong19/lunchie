@@ -27,7 +27,8 @@ class FoodListViewModel {
     }
 
     func getFoodList() {
-        db.collection("lunches").order(by: "date", descending: false).getDocuments{ (snapshot, error) in
+        // Get the latest lunch list 
+        db.collection("lunches").order(by: "date", descending: true).limit(to: 1).getDocuments{ (snapshot, error) in
             if let err = error {
                 print("Error getting documents: \(err)")
             } else {
