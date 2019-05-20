@@ -13,7 +13,6 @@ class FoodListViewController: UITableViewController, ViewModelable {
     var viewModel: ViewModel! = ViewModel()
 
     @IBOutlet weak var searchBar: UISearchBar!
-   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +70,17 @@ extension FoodListViewController: UISearchBarDelegate {
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.clearSearchFoodList()
+    }
+
+    @IBAction func infoButtonPressed(_ sender: Any) {
+        let alertController = UIAlertController(title: "Who made this?",
+                                                message: "Singapore Engineering team!👩🏻‍💻👨🏻‍💻\nIf you like it or want to give feedback/suggestion, feel free to ping us on Slack #sg-dev 🙌",
+                                                preferredStyle: .alert)
+        let thanksAction = UIAlertAction(title: "Thanks! 🙏",
+                                         style: .default,
+                                         handler: nil)
+        alertController.addAction(thanksAction)
+        present(alertController, animated: true, completion: nil)
     }
 }
 

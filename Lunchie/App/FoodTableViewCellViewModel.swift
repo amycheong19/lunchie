@@ -39,4 +39,14 @@ class FoodTableViewCellViewModel {
             db.document(employee.path!).updateData(dict)
         }
     }
+
+    func changeToSpareItem(from employee: Employee) {
+        // Delete the current
+        let spareItemName = "Spare from \(employee.name)"
+        let data: [String: Any] = ["name": spareItemName, "id": employee.id, "hasPickedUp": false,
+                    "selected_food": employee.selected_food, "path": employee.path! ]
+        db.document(employee.path!).setData(data)
+
+    }
+
 }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+class DonateLongPressGesture: UILongPressGestureRecognizer {
+    var employee: Employee?
+}
+
 class FoodTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     struct Metric {
@@ -56,6 +60,7 @@ class FoodTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollection
         let employee = viewModel.employees[indexPath.row]
         cell.nameLabel.text = employee.name
         cell.hasPickedUpFood = employee.hasPickedUp
+        addGestures(inCell: cell, withIndexPath: indexPath, employee: employee)
         return cell
     }
 
@@ -67,5 +72,42 @@ class FoodTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollection
         let size = CGSize(width: Metric.collectionCellWidth,
                           height: Metric.collectionCellHeight)
         return size
+    }
+
+    // MARK: Gesture recognizers
+    private func addGestures(inCell cell: UICollectionViewCell, withIndexPath indexPath: IndexPath,
+                             employee: Employee) {
+        let lpgr = DonateLongPressGesture.init(target: self, action: #selector(cellLongPressed))
+        lpgr.minimumPressDuration = 1.0
+        lpgr.employee = employee
+        if employee.name.lowercased().contains("spare") {
+            // You can't "undonate" a meal, that's bad!
+            cell.gestureRecognizers?.forEach(cell.removeGestureRecognizer)
+        } else {
+            cell.addGestureRecognizer(lpgr)
+        }
+    }
+
+    @objc private func cellLongPressed(_ gesture: DonateLongPressGesture) {
+        if gesture.state == .began {
+            let alertController = UIAlertController(title: "Donate your food to become Spare?",
+                                                    message: nil,
+                                                    preferredStyle: .alert)
+
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .cancel,
+                                             handler: nil)
+            alertController.addAction(cancelAction)
+
+            let donateAction = UIAlertAction(title: "Donate",
+                                             style: .default,
+                                             handler: { [weak self] _ in
+                                                
+                guard let `self` = self, let employee = gesture.employee else { return }
+                self.viewModel.changeToSpareItem(from: employee)
+            })
+            alertController.addAction(donateAction)
+            UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
+        }
     }
 }

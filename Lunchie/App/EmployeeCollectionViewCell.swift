@@ -13,8 +13,16 @@ class EmployeeCollectionViewCell: UICollectionViewCell {
 
     var hasPickedUpFood: Bool = false {
         didSet {
-            backgroundColor = hasPickedUpFood ? .red : .green
+            backgroundColor = hasPickedUpFood ? #colorLiteral(red: 1, green: 0.2371000051, blue: 0, alpha: 1) : #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            nameLabel.textColor = hasPickedUpFood ? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) : #colorLiteral(red: 1, green: 0.2371000051, blue: 0, alpha: 1)
         }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.layer.borderColor = #colorLiteral(red: 1, green: 0.2371000051, blue: 0, alpha: 1).cgColor
+        contentView.layer.borderWidth = 1.0
+        contentView.layer.cornerRadius = 3.0
     }
 
 }

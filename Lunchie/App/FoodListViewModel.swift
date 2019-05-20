@@ -20,12 +20,7 @@ class FoodListViewModel {
         }
     }
 
-    private(set) var employees: [Employee] = [] {
-        didSet {
-
-//            originalFoodList = foodList
-        }
-    }
+    private(set) var employees: [Employee] = []
 
     init() {
         getFoodList()
@@ -83,7 +78,7 @@ class FoodListViewModel {
         foodList = originalFoodList
     }
 
-    func mergeFoodEmployeeList() {
+    private func mergeFoodEmployeeList() {
         self.foodList = self.foodList.compactMap { food -> Food in
             var tempFood = food
             tempFood.employees = self.employees.filter{ $0.selected_food == food.id }
