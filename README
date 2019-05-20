@@ -1,0 +1,76 @@
+# Lunchie #
+# What problems is this app trying to solve?
+* To digitalize weekly food list
+* To know who has not picked up their food 
+
+----
+
+# Installing
+
+#### Firebase
+1. Create a new Firebase project.
+2. Replace GoogleService-Info.plist to your newly created GoogleService-Info.plist. The configurations should be the same to your Firebase settings.
+
+#### Creating a service account
+The easiest way to use this library is to create a Google Service Account for your application and give it read/write access to your datastore. Giving a service account access to your datastore is like giving access to a user's account, but this account is strictly used by your script, not by a person.
+
+If you don't already have a Firestore project you want to use, create one at the [Firebase admin console](https://console.firebase.google.com).
+
+To make a service account,
+
+1. Open the [Google Service Accounts page by clicking here](https://console.developers.google.com/projectselector/iam-admin/serviceaccounts). 
+2. Select your Firestore project, and then click "Create Service Account." 
+3. For your service account's role, choose `Datastore > Cloud Datastore Owner`. 
+4. Check the "Furnish a new private key" box and select JSON as your key type. 
+5. When you press "Create," your browser will download a `.json` file with your private key (`private_key`), service account email (`client_email`), and project ID (`project_id`). Copy these values into your Google Apps Script — you'll need them to authenticate with Firestore.
+
+
+# Built With
+The app works with **Google spreadsheet**, **Lunchie Google App Script** and **Firestore**.
+
+* [Google spreadsheet](https://docs.google.com/spreadsheets/d/1PY9fY_GJ0zkdwbMPym1CYH4_rjAu7Mg-M8RBX-OhBJ4/edit#gid=2003640356) - To create lunch list that populate food and employees who order them
+* [Firestore](https://console.firebase.google.com/u/0/project/lunchie-5c81b/database) - Online database that store the food and employees
+* [Lunchie Google App Script](https://script.google.com/d/M0CnKEyTadpajWoqCbfzvRCEWoci_pl8c/edit?mid=ACjPJvEEjJMR71XlbScLZK52GCPm3GPRfUe6Q5nmhIboNCP2kLRIgtO5TfQ1S9L6uC6ahCLTv4Vh7TLrmF0qNvrQvCEASRlJw5CxlBvQG1PE4dskihfvhphQ5xmGCNTqhbb0kb346ZuW8qBy&uiv=2) - Google App Script that integrate with Firestore.
+* [FirestoreGoogleAppsScript](https://github.com/grahamearley/FirestoreGoogleAppsScript): Firestore app tool that is being used in App Script.
+
+### Google Spreadsheet (with Google App Script)
+
+#### How to use:
+1. At top-bar, click on *Lunchie*.
+2. (First-timer) Allow permission for the app to be executed.
+3. Click on Lunchie> *1. Create New Sheet* - This enables the script to create a list of your DD-MM-YYYY in Firestore
+4. After fill in all the food and employees who order in the list, click on Lunchie> *2. Update current sheet* 
+
+**Other function:** You can reset the current spreadsheet with Lunchie> Reset  
+
+#### Things to take note: 
+1. Always make sure you create the right **sheetname DD-MM-YYYY**
+2. Always **update the sheet** after all the names are in.  Do not update the list if you do not wish to lose your 'hasPickedUp' status of the orders.
+3. Don't put the **same food name or employees name** (you can add 1 or 2 ...etc following it) 
+    
+### iOS App
+#### How to use:
+
+1. Clone the project and install libraries: `cd` <root of the project> `pod install`
+2. The app loads the latest list from current date.
+
+**Other functions:** 
+
+1. You can long-press employee name to change order to a spare item. Once an order changed to spare, it cannot be reversed.
+2. You search your name 
+3. Who made this: More info of this project
+
+
+## Backlog (with priorities)
+1. Display lunch list with dates
+2. Display the food item's properties (Halal & Vegetarian) 
+3. Slack Bot function to inform employees to put in their orders
+4. Polling on the most popular meal
+
+------
+## Author
+* **Amy Cheong** - *Initial work* - [LinkedIn](https://www.linkedin.com/in/amycheong19)
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
